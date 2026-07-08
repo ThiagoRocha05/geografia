@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVALIAÇÃO DE GEOGRAFIA - PRIMEIRO ANO</title>
+    <style>
+        * {
+            box-shadow: none;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f7f9fa;
+            color: #000000;
+            margin: 0;
+            padding: 40px 15px;
+            line-height: 1.6;
+        }
+        .exam-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            padding: 50px 40px;
+            position: relative;
+        }
+        .institution-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .exam-meta-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 13pt;
+            margin-bottom: 30px;
+            border-bottom: 3px double #000000;
+            padding-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .student-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+        }
+        .student-info-table td {
+            border: 1px solid #000000;
+            padding: 12px;
+            font-size: 12pt;
+            text-transform: uppercase;
+        }
+        .system-widgets {
+            background-color: #fcfcfc;
+            border: 1px dashed #000000;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            font-size: 11pt;
+            display: flex;
+            justify-content: space-between;
+        }
+        .instructions-block {
+            font-size: 11pt;
+            margin-bottom: 40px;
+            text-align: justify;
+            text-transform: uppercase;
+        }
+        .question-wrapper {
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 1px dotted #dddddd;
+        }
+        .question-wrapper:last-of-type {
+            border-bottom: none;
+        }
+        .question-heading {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: justify;
+            text-transform: uppercase;
+        }
+        .graphic-resource {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 18px 0;
+            border: 1px solid #000000;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+        .alternatives-container {
+            margin-left: 10px;
+        }
+        .alternative-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 12pt;
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            text-transform: uppercase;
+        }
+        .alternative-row:hover {
+            background-color: #f5f5f5;
+        }
+        .alternative-row input[type="radio"] {
+            margin-top: 5px;
+            margin-right: 12px;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        .text-input-container {
+            margin-left: 10px;
+            margin-top: 15px;
+            font-size: 12pt;
+            text-transform: uppercase;
+        }
+        .exam-text-input {
+            border: none;
+            border-bottom: 1px solid #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13pt;
+            width: 300px;
+            padding: 4px 8px;
+            outline: none;
+            background-color: transparent;
+            color: #000000;
+            text-transform: uppercase;
+        }
+        .exam-text-input:focus {
+            border-bottom: 2px solid #000000;
+        }
+        .text-correction-feedback {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 11pt;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .control-panel {
+            text-align: center;
+            margin-top: 50px;
+            border-top: 2px solid #000000;
+            padding-top: 30px;
+        }
+        .btn-engine {
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 14px 40px;
+            font-size: 13pt;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 10px;
+            transition: all 0.2s ease;
+        }
+        .btn-engine:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        #btn-reset {
+            border-color: #888888;
+            color: #555555;
+            display: none;
+        }
+        #btn-reset:hover {
+            background-color: #888888;
+            color: #ffffff;
+        }
+        .dashboard-result {
+            display: none;
+            border: 3px solid #000000;
+            padding: 30px;
+            margin-bottom: 40px;
+            background-color: #fafafa;
+            text-transform: uppercase;
+        }
+        .dashboard-title {
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .metric-line {
+            font-size: 13pt;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .metric-highlight {
+            font-weight: bold;
+            font-size: 15pt;
+        }
+        .state-correct {
+            background-color: #e6f4ea !important;
+            border: 1px solid #137333 !important;
+            color: #137333;
+            font-weight: bold;
+        }
+        .state-wrong {
+            background-color: #fce8e6 !important;
+            border: 1px solid #c5221f !important;
+            color: #c5221f;
+        }
+        .input-correct {
+            background-color: #e6f4ea !important;
+            border-bottom: 2px solid #137333 !important;
+            color: #137333;
+        }
+        .input-wrong {
+            background-color: #fce8e6 !important;
+            border-bottom: 2px solid #c5221f !important;
+            color: #c5221f;
+        }
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .exam-container {
+                border: none;
+                padding: 0;
+            }
+            .btn-engine, .system-widgets, .dashboard-result {
+                display: none !important;
+            }
+            .exam-text-input {
+                border-bottom: 1px solid #000000 !important;
+                background-color: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="exam-container">
+    <div class="institution-header">AVALIAÇÃO DE GEOGRAFIA</div>
+    <div class="exam-meta-title">MÓDULOS 5 E 6: A MORADIA E SEUS TIPOS</div>
+
+    <table class="student-info-table">
+        <tr>
+            <td colspan="2"><strong>ESTUDANTE:</strong> HELENA / VALENTINA</td>
+            <td style="width: 30%;"><strong>DATA:</strong> <span id="current-date">____/____/2026</span></td>
+        </tr>
+        <tr>
+            <td style="width: 45%;"><strong>SÉRIE:</strong> 1º ANO DO ENSINO FUNDAMENTAL</td>
+            <td style="width: 30%;"><strong>BIMESTRE:</strong> 2º BIMESTRE</td>
+            <td><strong>NOTA OBTIDA:</strong> <span id="grade-slot" style="font-weight: bold;">_________</span></td>
+        </tr>
+    </table>
+
+    <div class="system-widgets">
+        <div><strong>ESTADO DA PROVA:</strong> <span id="status-text">EM ANDAMENTO</span></div>
+        <div><strong>CRONÔMETRO DE TREINO:</strong> <span id="timer-text">00:00</span></div>
+    </div>
+
+    <div class="instructions-block">
+        <strong>INSTRUÇÕES:</strong> RESPONDA AS QUESTÕES DE ACORDO COM AS ATIVIDADES DO SEU LIVRO DE GEOGRAFIA. ALGUMAS QUESTÕES SÃO PARA MARCAR UM X E OUTRAS SÃO PARA ESCREVER A PALAVRA COMPLETA NA LINHA DE RESPOSTA.
+    </div>
+
+    <div id="dashboard-result" class="dashboard-result">
+        <div class="dashboard-title">RESULTADO DO EXAME</div>
+        <div class="metric-line">TOTAL DE ACERTOS: <span id="metric-score" class="metric-highlight">0</span> DE <span id="metric-total">0</span> QUESTÕES</div>
+        <div class="metric-line">NOTA FINAL: <span id="metric-grade" class="metric-highlight">0.0</span> / 10.0</div>
+        <div class="metric-line" id="metric-feedback" style="margin-top: 15px; font-style: italic;"></div>
+    </div>
+
+    <form id="form-exam-engine">
+        
+        <div class="question-wrapper" data-qid="q1" data-qtype="radio">
+            <div class="question-heading">1. A IMAGEM ABAIXO MOSTRA UMA CASA CONSTRUÍDA SOBRE ESTACAS DE MADEIRA NA BEIRA DE UM RIO. QUAL É O NOME DESSE TIPO DE MORADIA?</div>
+            <div class="graphic-resource">
+                <svg viewBox="0 0 400 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" style="background-color: #87ceeb; display: block;">
+                    <rect y="120" width="400" height="40" fill="#0369a1"/>
+                    <rect x="150" y="80" width="100" height="100" fill="#d97706"/>
+                    <rect x="160" y="40" width="80" height="40" fill="#fef3c7"/>
+                    <polygon points="150,40 200,10 250,40" fill="#b45309"/>
+                    <rect x="175" y="50" width="15" height="20" fill="#38bdf8"/>
+                    <rect x="210" y="50" width="15" height="20" fill="#38bdf8"/>
+                    <line x1="160" y1="80" x2="160" y2="160" stroke="#78350f" stroke-width="6"/>
+                    <line x1="200" y1="80" x2="200" y2="160" stroke="#78350f" stroke-width="6"/>
+                    <line x1="240" y1="80" x2="240" y2="160" stroke="#78350f" stroke-width="6"/>
+                </svg>
+            </div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q1" value="A"> OCA DE ÍNDIO.</label>
+                <label class="alternative-row"><input type="radio" name="q1" value="B"> PRÉDIO DE APARTAMENTOS.</label>
+                <label class="alternative-row"><input type="radio" name="q1" value="C"> PALAFITA.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q2" data-qtype="radio">
+            <div class="question-heading">2. OS PRÉDIOS SÃO MORADIAS CONSTRUÍDAS UMAS EM CIMA DAS OUTRAS PARA APROVEITAR O ESPAÇO. ESSAS MORADIAS SÃO COMUNS NAS:</div>
+            <div class="graphic-resource">
+                <svg viewBox="0 0 400 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" style="background-color: #f1f5f9; display: block;">
+                    <rect x="100" y="20" width="80" height="140" fill="#64748b"/>
+                    <rect x="220" y="40" width="60" height="120" fill="#475569"/>
+                    <rect x="120" y="30" width="10" height="15" fill="#fef08a"/><rect x="150" y="30" width="10" height="15" fill="#e2e8f0"/>
+                    <rect x="120" y="60" width="10" height="15" fill="#e2e8f0"/><rect x="150" y="60" width="10" height="15" fill="#fef08a"/>
+                    <rect x="120" y="90" width="10" height="15" fill="#fef08a"/><rect x="150" y="90" width="10" height="15" fill="#e2e8f0"/>
+                    <rect x="235" y="55" width="30" height="10" fill="#fef08a"/>
+                    <rect x="235" y="85" width="30" height="10" fill="#e2e8f0"/>
+                    <rect x="235" y="115" width="30" height="10" fill="#fef08a"/>
+                    <rect y="150" width="400" height="10" fill="#334155"/>
+                </svg>
+            </div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q2" value="A"> FLORESTAS E MATAS.</label>
+                <label class="alternative-row"><input type="radio" name="q2" value="B"> GRANDES CIDADES.</label>
+                <label class="alternative-row"><input type="radio" name="q2" value="C"> BEIRAS DE RIOS ALAGADOS.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q3" data-qtype="radio">
+            <div class="question-heading">3. AS CASAS INDÍGENAS FEITAS COM ELEMENTOS DA FLORESTA, COMO FOLHAS E MADEIRA, SÃO CHAMADAS DE:</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q3" value="A"> PALAFITAS.</label>
+                <label class="alternative-row"><input type="radio" name="q3" value="B"> ALVENARIA.</label>
+                <label class="alternative-row"><input type="radio" name="q3" value="C"> OCAS.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q4" data-qtype="radio">
+            <div class="question-heading">4. A MAIORIA DAS CASAS E PRÉDIOS DAS CIDADES SÃO FEITAS DE ALVENARIA. QUAIS MATERIAIS SÃO USADOS NESSE TIPO DE CONSTRUÇÃO?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q4" value="A"> PALHA E FOLHAS DE ÁRVORES.</label>
+                <label class="alternative-row"><input type="radio" name="q4" value="B"> TIJOLO, CIMENTO E CONCRETO.</label>
+                <label class="alternative-row"><input type="radio" name="q4" value="C"> APENAS MADEIRA DE ÁRVORES.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q5" data-qtype="radio">
+            <div class="question-heading">5. NA CONSTRUÇÃO DE UMA CASA, VÁRIOS PROFISSIONAIS TRABALHAM JUNTOS. QUEM É O RESPONSÁVEL POR USAR TIJOLO E CONCRETO PARA LEVANTAR AS PAREDES?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q5" value="A"> O ELETRICISTA.</label>
+                <label class="alternative-row"><input type="radio" name="q5" value="B"> O PEDREIRO.</label>
+                <label class="alternative-row"><input type="radio" name="q5" value="C"> O ENCANADOR.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q6" data-qtype="radio">
+            <div class="question-heading">6. A ÁGUA DA CASA PASSA POR DENTRO DE CANOS PARA CHEGAR ATÉ AS TORNEIRAS E O CHUVEIRO. QUAL PROFISSIONAL INSTALA OS CANOS?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q6" value="A"> O ENCANADOR.</label>
+                <label class="alternative-row"><input type="radio" name="q6" value="B"> O PINTOR.</label>
+                <label class="alternative-row"><input type="radio" name="q6" value="C"> O MARCENEIRO.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q7" data-qtype="radio">
+            <div class="question-heading">7. AS CASAS SÃO DIVIDIDAS EM VÁRIAS PARTES E CADA UMA TEM UMA FUNÇÃO. COMO SÃO CHAMADAS AS PARTES DE DENTRO DE UMA CASA (COMO A SALA E A COZINHA)?</div>
+            <div class="graphic-resource">
+                <svg viewBox="0 0 400 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg" style="background-color: #e0f2fe; display: block;">
+                    <polygon points="100,60 200,20 300,60" fill="#b45309"/>
+                    <rect x="100" y="60" width="200" height="100" fill="#fef3c7" stroke="#78350f" stroke-width="4"/>
+                    <line x1="200" y1="60" x2="200" y2="160" stroke="#78350f" stroke-width="4"/>
+                    <line x1="100" y1="110" x2="300" y2="110" stroke="#78350f" stroke-width="4"/>
+                    <rect x="130" y="75" width="40" height="25" fill="#bae6fd"/>
+                    <rect x="240" y="70" width="25" height="35" fill="#fca5a5"/>
+                    <rect x="120" y="130" width="60" height="30" fill="#cbd5e1"/>
+                    <circle cx="250" cy="140" r="10" fill="#94a3b8"/>
+                </svg>
+            </div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q7" value="A"> CÔMODOS.</label>
+                <label class="alternative-row"><input type="radio" name="q7" value="B"> PALAFITAS.</label>
+                <label class="alternative-row"><input type="radio" name="q7" value="C"> ALVENARIA.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q8" data-qtype="radio">
+            <div class="question-heading">8. O BANHEIRO É UM DOS CÔMODOS DA CASA. QUAL É A FUNÇÃO PRINCIPAL DO BANHEIRO?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q8" value="A"> PREPARAR AS REFEIÇÕES E COMER.</label>
+                <label class="alternative-row"><input type="radio" name="q8" value="B"> TOMAR BANHO E ESCOVAR OS DENTES.</label>
+                <label class="alternative-row"><input type="radio" name="q8" value="C"> GUARDAR O CARRO OU A BICICLETA.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q9" data-qtype="radio">
+            <div class="question-heading">9. A COZINHA É O CÔMODO ONDE USAMOS O FOGÃO E A GELADEIRA. O QUE AS PESSOAS FAZEM NA COZINHA?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q9" value="A"> PREPARAM AS REFEIÇÕES (COMIDA).</label>
+                <label class="alternative-row"><input type="radio" name="q9" value="B"> ASSISTEM TV E BRINCAM COM OS AMIGOS.</label>
+                <label class="alternative-row"><input type="radio" name="q9" value="C"> DORMEM DURANTE A NOITE.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q10" data-qtype="text">
+            <div class="question-heading">10. PARA MANTER A CASA ARRUMADA E LIMPA É PRECISO QUE TODOS AJUDEM. UMA DAS TAREFAS É NÃO DEIXAR OS BRINQUEDOS ESPALHADOS. VOCÊ DEVE ___________ OS BRINQUEDOS. (DIGITE A PALAVRA QUE FALTA):</div>
+            <div class="text-input-container">
+                RESPOSTA: <input type="text" name="q10" class="exam-text-input" placeholder="ESCREVA AQUI" autocomplete="off">
+                <span class="text-correction-feedback" id="feedback-q10"></span>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q11" data-qtype="text">
+            <div class="question-heading">11. LOGO DEPOIS DE ACORDAR, UMA BOA TAREFA PARA AJUDAR NA ORGANIZAÇÃO DA CASA É ____________ A CAMA. (DIGITE A PALAVRA QUE FALTA):</div>
+            <div class="text-input-container">
+                RESPOSTA: <input type="text" name="q11" class="exam-text-input" placeholder="ESCREVA AQUI" autocomplete="off">
+                <span class="text-correction-feedback" id="feedback-q11"></span>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q12" data-qtype="radio">
+            <div class="question-heading">12. ALÉM DOS SERES HUMANOS, MUITOS ANIMAIS TAMBÉM CONSTROEM SUAS PRÓPRIAS CASAS NA NATUREZA PARA SE ABRIGAR. QUAL DESSES ANIMAIS CONSTRÓI CASA?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q12" value="A"> FORMIGA E PASSARINHO (JOÃO-DE-BARRO).</label>
+                <label class="alternative-row"><input type="radio" name="q12" value="B"> GATO E CACHORRO DE ESTIMAÇÃO.</label>
+                <label class="alternative-row"><input type="radio" name="q12" value="C"> LEÃO E GOLFINHO.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q13" data-qtype="radio">
+            <div class="question-heading">13. SEGUNDO O TEXTO DO SEU LIVRO, ALGUNS ANIMAIS COMO AS ABELHAS FAZEM SUAS CASAS PARA SE PROTEGEREM. DE QUEM ELES QUEREM SE PROTEGER?</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q13" value="A"> DA ÁGUA DOS RIOS E LAGOS.</label>
+                <label class="alternative-row"><input type="radio" name="q13" value="B"> DOS ANIMAIS PREDADORES, DO SOL, DO FRIO E DA CHUVA.</label>
+                <label class="alternative-row"><input type="radio" name="q13" value="C"> APENAS DO VENTO DO DESERTO.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q14" data-qtype="radio">
+            <div class="question-heading">14. O LIVRO MOSTRA QUE TODAS AS PESSOAS TÊM DIREITO A TER UM LUGAR PARA MORAR. ESSA REGRA É UM DIREITO DE:</div>
+            <div class="alternatives-container">
+                <label class="alternative-row"><input type="radio" name="q14" value="A"> APENAS ALGUMAS PESSOAS DO BRASIL.</label>
+                <label class="alternative-row"><input type="radio" name="q14" value="B"> TODAS AS PESSOAS, POIS É UM DIREITO DE TODOS.</label>
+                <label class="alternative-row"><input type="radio" name="q14" value="C"> APENAS QUEM CONSTRÓI PALAFITAS.</label>
+            </div>
+        </div>
+
+        <div class="question-wrapper" data-qid="q15" data-qtype="text">
+            <div class="question-heading">15. O LUGAR ONDE AS PESSOAS DORMEM EM UMA CASA, ONDE GERALMENTE FICA A CAMA E O GUARDA-ROUPA, É CHAMADO DE ____________. (DIGITE O NOME DO CÔMODO):</div>
+            <div class="text-input-container">
+                RESPOSTA: <input type="text" name="q15" class="exam-text-input" placeholder="ESCREVA AQUI" autocomplete="off">
+                <span class="text-correction-feedback" id="feedback-q15"></span>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <button type="button" id="btn-submit" class="btn-engine" onclick="processEvaluationEngine()">CORRIGIR AVALIAÇÃO</button>
+            <button type="button" id="btn-reset" class="btn-engine" onclick="resetEvaluationEngine()">REFAZER EXAME</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const answerKey = {
+        q1: "C", q2: "B", q3: "C", q4: "B", q5: "B",
+        q6: "A", q7: "A", q8: "B", q9: "A", q10: "guardar",
+        q11: "arrumar", q12: "A", q13: "B", q14: "B", q15: "quarto"
+    };
+
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let examActive = true;
+
+    window.addEventListener('DOMContentLoaded', () => {
+        startTimerEngine();
+        loadSavedState();
+        setupStateListeners();
+    });
+
+    function startTimerEngine() {
+        if(timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (!examActive) return;
+            secondsElapsed++;
+            const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+            const secs = String(secondsElapsed % 60).padStart(2, '0');
+            document.getElementById("timer-text").textContent = `${mins}:${secs}`;
+        }, 1000);
+    }
+
+    function setupStateListeners() {
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (!examActive) return;
+                localStorage.setItem(`geo_exam_save_${radio.name}`, radio.value);
+            });
+        });
+
+        const textInputs = document.querySelectorAll('.exam-text-input');
+        textInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (!examActive) return;
+                localStorage.setItem(`geo_exam_save_${input.name}`, input.value);
+            });
+        });
+    }
+
+    function loadSavedState() {
+        for (let q in answerKey) {
+            const savedValue = localStorage.getItem(`geo_exam_save_${q}`);
+            if (savedValue) {
+                const radioTarget = document.querySelector(`input[name="${q}"][value="${savedValue}"]`);
+                if (radioTarget) {
+                    radioTarget.checked = true;
+                } else {
+                    const textTarget = document.querySelector(`input[name="${q}"][type="text"]`);
+                    if (textTarget) textTarget.value = savedValue;
+                }
+            }
+        }
+    }
+
+    function normalizeString(str) {
+        if (!str) return "";
+        return str.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function processEvaluationEngine() {
+        examActive = false;
+        clearInterval(timerInterval);
+        
+        const form = document.getElementById("form-exam-engine");
+        let rawScore = 0;
+        const totalItems = Object.keys(answerKey).length;
+
+        for (let q in answerKey) {
+            const wrapper = document.querySelector(`[data-qid="${q}"]`);
+            const type = wrapper.getAttribute("data-qtype");
+
+            if (type === "radio") {
+                const selectedRadio = form.elements[q] ? form.elements[q].value : null;
+                const rows = wrapper.querySelectorAll(".alternative-row");
+
+                rows.forEach(row => {
+                    const radioInput = row.querySelector("input");
+                    radioInput.disabled = true;
+
+                    if (radioInput.value === answerKey[q]) {
+                        row.classList.add("state-correct");
+                    } else if (selectedRadio === radioInput.value && selectedRadio !== answerKey[q]) {
+                        row.classList.add("state-wrong");
+                    }
+                });
+
+                if (selectedRadio === answerKey[q]) rawScore++;
+
+            } else if (type === "text") {
+                const inputElement = wrapper.querySelector(".exam-text-input");
+                inputElement.disabled = true;
+                const userText = normalizeString(inputElement.value);
+                const correctText = normalizeString(answerKey[q]);
+                const feedbackSpan = document.getElementById(`feedback-${q}`);
+
+                if (userText === correctText) {
+                    inputElement.classList.add("input-correct");
+                    feedbackSpan.textContent = "CORRETO";
+                    feedbackSpan.style.color = "#137333";
+                    rawScore++;
+                } else {
+                    inputElement.classList.add("input-wrong");
+                    feedbackSpan.textContent = `INCORRETO (GABARITO: ${answerKey[q].toUpperCase()})`;
+                    feedbackSpan.style.color = "#c5221f";
+                }
+            }
+        }
+
+        const finalGrade = ((rawScore / totalItems) * 10).toFixed(1);
+        
+        document.getElementById("grade-slot").textContent = `${finalGrade} / 10.0`;
+        document.getElementById("status-text").textContent = "CONCLUÍDA";
+
+        document.getElementById("metric-score").textContent = rawScore;
+        document.getElementById("metric-total").textContent = totalItems;
+        document.getElementById("metric-grade").textContent = finalGrade;
+
+        const feedbackSlot = document.getElementById("metric-feedback");
+        if (rawScore === totalItems) {
+            feedbackSlot.textContent = "EXCELENTE PROVEITO! GABARITO DE GEOGRAFIA COMPLETO!";
+        } else if (rawScore >= totalItems * 0.7) {
+            feedbackSlot.textContent = "BOM RENDIMENTO! REVISE AS QUESTÕES MARCADAS EM VERMELHO PARA FIXAR O CONTEÚDO.";
+        } else {
+            feedbackSlot.textContent = "RECOMENDA-SE REVER AS ANOTAÇÕES DO LIVRO DE GEOGRAFIA E REPETIR O TESTE DE TREINO.";
+        }
+
+        document.getElementById("dashboard-result").style.display = "block";
+        document.getElementById("btn-submit").style.display = "none";
+        document.getElementById("btn-reset").style.display = "inline-block";
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetEvaluationEngine() {
+        for (let q in answerKey) {
+            localStorage.removeItem(`geo_exam_save_${q}`);
+        }
+
+        examActive = true;
+        secondsElapsed = 0;
+        document.getElementById("timer-text").textContent = "00:00";
+        document.getElementById("status-text").textContent = "EM ANDAMENTO";
+        document.getElementById("grade-slot").textContent = "_________";
+        document.getElementById("dashboard-result").style.display = "none";
+        
+        const form = document.getElementById("form-exam-engine");
+        form.reset();
+
+        document.querySelectorAll(".alternative-row").forEach(row => {
+            row.classList.remove("state-correct", "state-wrong");
+            const input = row.querySelector("input");
+            input.disabled = false;
+        });
+
+        document.querySelectorAll(".exam-text-input").forEach(input => {
+            input.classList.remove("input-correct", "input-wrong");
+            input.disabled = false;
+        });
+
+        document.querySelectorAll(".text-correction-feedback").forEach(span => {
+            span.textContent = "";
+        });
+
+        document.getElementById("btn-submit").style.display = "inline-block";
+        document.getElementById("btn-reset").style.display = "none";
+
+        startTimerEngine();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
